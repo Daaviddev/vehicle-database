@@ -1,5 +1,7 @@
 import axios from 'axios';
+
 import firebaseConfig from '../constants/firebaseConfig';
+import { showMessagePopup } from '../utils/messagePopupUtils';
 
 class BaseService {
   constructor(resource) {
@@ -12,7 +14,7 @@ class BaseService {
       const response = await axios.post(this.baseUrl, data);
       return response.data;
     } catch (error) {
-      console.error('Error during create: ', error);
+      showMessagePopup(`Error while creating data: ${error.message}`, 'error');
     }
   }
 
@@ -22,7 +24,7 @@ class BaseService {
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
-      console.error('Error during read: ', error);
+      showMessagePopup(`Error during fetching data: ${error.message}`, 'error');
     }
   }
 
@@ -36,7 +38,10 @@ class BaseService {
       });
       return response.data;
     } catch (error) {
-      console.error('Error during read: ', error);
+      showMessagePopup(
+        `Error during fetching data with parameters: ${error.message}`,
+        'error'
+      );
     }
   }
 
@@ -46,7 +51,7 @@ class BaseService {
       const response = await axios.patch(url, data);
       return response.data;
     } catch (error) {
-      console.error('Error during update: ', error);
+      showMessagePopup(`Error during update data: ${error.message}`, 'error');
     }
   }
 
@@ -56,7 +61,7 @@ class BaseService {
       const response = await axios.delete(url);
       return response.data;
     } catch (error) {
-      console.error('Error during delete: ', error);
+      showMessagePopup(`Error during delete data: ${error.message}`, 'error');
     }
   }
 }
