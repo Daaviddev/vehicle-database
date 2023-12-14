@@ -1,5 +1,5 @@
-//import messagePopupStore from '../stores/messagePopupStore';
+import messagePopupStore from '../stores/MessagePopupStore';
 
-export const showMessage = (text, type) => {
-  // messagePopupStore.showMessage(text, type);
+export const showMessagePopup = (text, type) => {
+  messagePopupStore.showMessagePopup(text, type);
 };

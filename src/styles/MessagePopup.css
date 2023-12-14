@@ -2,27 +2,68 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: #272727; /* Dark background */
+  color: #f9f9f9; /* Light text color */
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  min-width: 250px;
+  max-width: 400px;
 }
 
-.message-popup.error {
-  background-color: red;
+.message-content {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
 }
 
-.message-popup.success {
-  background-color: green;
+.message-type {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #fff; /* Light color for type */
 }
 
-.message-popup button {
-  background: none;
+.message-text {
+  margin-right: 20px;
+}
+
+.close-button {
+  margin-left: auto;
+  background: #555; /* Grey background for close button */
   border: none;
-  color: white;
   cursor: pointer;
+  font-size: 18px;
+  color: #f9f9f9; /* Light color for close icon */
+  border-radius: 15%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background: #777; /* Darker grey on hover */
+  color: #fff;
+}
+
+/* Message Types with Colors */
+.message-popup.error .message-type {
+  color: #e74c3c; /* Error color */
+}
+
+.message-popup.success .message-type {
+  color: #2ecc71; /* Success color */
+}
+
+.message-popup.info .message-type {
+  color: #3498db; /* Info color */
+}
+
+.message-popup.warning .message-type {
+  color: #f1c40f; /* Warning color */
 }

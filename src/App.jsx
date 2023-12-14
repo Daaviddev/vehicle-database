@@ -1,28 +1,30 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
+import messagePopupStore from './stores/MessagePopupStore';
 import MessagePopup from './components/ui/MessagePopup';
-import VehicleMakePage from './pages/vehicleMakeView/VehicleMakePage';
+
+const VehicleMakePage = lazy(
+  () => import('./pages/vehicleMakeView/VehicleMakePage')
+);
 
 import './styles/App.css';
 
-function App() {
-  const handlePopupClose = () => {
-    console.log('close');
-  };
-
+const App = observer(() => {
   return (
     <div className="app">
-      <MessagePopup message={'test'} onClose={handlePopupClose} />
       <div className="main-content">
+        <MessagePopup messagePopupStore={messagePopupStore} />
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<VehicleMakePage />} />
+            <Route path="/vehicle-makes" element={<VehicleMakePage />} />
           </Routes>
         </Suspense>
       </div>
     </div>
   );
-}
+});
 
 export default App;
