@@ -1,0 +1,181 @@
+#root {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* src/App.css */
+/* src/App.css */
+.App {
+  display: flex;
+  color: #fff;
+  background-color: #121212; /* Dark background */
+  user-select: none; /* This disables text selection */
+}
+
+.SidePanel {
+  width: 200px;
+  background-color: #1e1e1e;
+  height: 100vh;
+  padding: 10px;
+}
+
+.MainContent {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+}
+
+.nav-link:hover {
+  background-color: #333;
+}
+
+/* Common Table and Grid Styles */
+.table,
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td,
+.grid div {
+  border: 1px solid #333;
+  padding: 8px;
+  text-align: left;
+  color: #ddd;
+  cursor: default;
+  font-size: 14px;
+}
+
+.table th,
+.grid header {
+  background-color: #242424;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin: 4px 2px;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  justify-self: end;
+}
+
+.btn-green {
+  background-color: #4caf50; /* Green */
+  margin: 1rem;
+  color: white;
+}
+
+.btn-green:hover {
+  background-color: white;
+  color: black;
+}
+
+.table-button {
+  color: white;
+  cursor: pointer;
+  border: 1px solid #333;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.table-button:hover {
+  outline: none;
+  border-color: #4caf50;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.view-header-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.page-canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.table-header-text-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-right: 1rem;
+}
+
+.table-header-text-wrapper label {
+  margin: 0;
+  min-width: 20px;
+}
+
+.table-header-text-wrapper-order:hover {
+  color: Green;
+  cursor: pointer;
+}
+
+.components-wrapper {
+  width: 100%;
+  max-width: 1250px;
+}
