@@ -1,4 +1,8 @@
-.message-popup {
+/* ========================================================================== */
+/* POPUP LAYOUT */
+/* ========================================================================== */
+
+.messagePopup {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -15,23 +19,31 @@
   max-width: 400px;
 }
 
-.message-content {
+/* ========================================================================== */
+/* CONTENT AND TEXT */
+/* ========================================================================== */
+
+.messageContent {
   display: flex;
   align-items: center;
   flex-grow: 1;
 }
 
-.message-type {
+.messageType {
   font-weight: bold;
   margin-right: 10px;
   color: #fff; /* Light color for type */
 }
 
-.message-text {
+.messageText {
   margin-right: 20px;
 }
 
-.close-button {
+/* ========================================================================== */
+/* CLOSING BUTTON */
+/* ========================================================================== */
+
+.closeButton {
   margin-left: auto;
   background: #555; /* Grey background for close button */
   border: none;
@@ -46,24 +58,27 @@
   justify-content: center;
 }
 
-.close-button:hover {
+.closeButton:hover {
   background: #777; /* Darker grey on hover */
   color: #fff;
 }
 
-/* Message Types with Colors */
-.message-popup.error .message-type {
+/* ========================================================================== */
+/* MESSAGE TYPE COLORS */
+/* ========================================================================== */
+
+.messagePopup.error .message-type {
   color: #e74c3c; /* Error color */
 }
 
-.message-popup.success .message-type {
+.messagePopup.success .message-type {
   color: #2ecc71; /* Success color */
 }
 
-.message-popup.info .message-type {
+.messagePopup.info .message-type {
   color: #3498db; /* Info color */
 }
 
-.message-popup.warning .message-type {
+.messagePopup.warning .message-type {
   color: #f1c40f; /* Warning color */
 }

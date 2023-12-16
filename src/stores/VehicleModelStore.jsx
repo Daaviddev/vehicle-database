@@ -1,17 +1,23 @@
 import { makeObservable, observable, action, runInAction } from 'mobx';
+
 import VehicleModelService from '../services/VehicleModelService';
-import { showMessagePopup } from '../utils/messagePopupUtils';
+import showMessagePopup from '../utils/messagePopupUtils';
+import {
+  resetSorting,
+  updatePaginationConfig,
+  updatePaginationState,
+} from '../utils/storeUtils';
 
 class VehicleModelStore {
   models = [];
-  sortField = 'name'; // default sort field
-  sortOrder = 'ASCENDING'; // default sort order
-  filters = {
-    field: 'name',
-    operator: 'STARTS_WITH',
-    value: '',
-  };
 
+  sortField = 'name';
+
+  sortOrder = 'ASCENDING';
+
+  filters = { field: 'name', operator: 'STARTS_WITH', value: '' };
+
+  // Pagination state for UI
   paginate = {
     currentPage: 1,
     pageSize: 3,
@@ -21,6 +27,7 @@ class VehicleModelStore {
     filteredResults: 0,
   };
 
+  // Pagination parameters for API requests
   pagination = {
     pageSize: 3,
     pageToken: '',
@@ -43,7 +50,7 @@ class VehicleModelStore {
     });
   }
 
-  async fetchModels() {
+  async fetchModels(showErrorPopup = true) {
     try {
       const fetchedData = await VehicleModelService.fetchModelsWithParams({
         sortField: this.sortField,
@@ -51,40 +58,41 @@ class VehicleModelStore {
         filters: this.filters,
         pagination: this.pagination,
       });
-      const fetchedModels = fetchedData.documents;
+
       runInAction(() => {
-        this.models = fetchedModels.map((model) => ({
+        this.models = fetchedData.documents.map((model) => ({
           ...model,
           name: model.nameDisplay,
           make: model.makeDisplay,
         }));
-        if (fetchedData.totalPages > 1) {
-          this.paginate.totalPages = fetchedData.totalPages;
-          this.paginate.currentPage = fetchedData.currentPage;
-          this.paginate.previousPageToken = fetchedData.previousPageToken;
-          this.paginate.nextPageToken = fetchedData.nextPageToken;
-        }
       });
+      updatePaginationState(this, fetchedData);
     } catch (error) {
-      showMessagePopup(`Error during fetchModel: ${error.message}`, 'error');
+      console.error(`Error during fetchModels: ${error.message}`, error);
+      if (showErrorPopup) {
+        showMessagePopup(`Error during fetchModels: ${error.message}`, 'error');
+      }
     }
   }
 
   async addVehicleModel(data) {
     try {
-      const response = await VehicleModelService.addVehicleModel(data);
-      this.fetchModels();
-      return response;
+      await VehicleModelService.addVehicleModel(data);
+      this.fetchModels(false);
+      showMessagePopup('Vehicle model added successfully.', 'success');
     } catch (error) {
-      showMessagePopup('Error during addVehicleModel: ', error);
+      showMessagePopup(
+        `Error during addVehicleModel: ${error.message}`,
+        'error'
+      );
     }
   }
 
   async updateVehicleModel(id, data) {
     try {
-      const response = await VehicleModelService.updateVehicleModel(id, data);
-      this.fetchModels();
-      return response;
+      await VehicleModelService.updateVehicleModel(id, data);
+      this.fetchModels(false);
+      showMessagePopup('Vehicle model updated successfully.', 'success');
     } catch (error) {
       showMessagePopup(
         `Error during updateVehicleModel: ${error.message}`,
@@ -95,9 +103,9 @@ class VehicleModelStore {
 
   async deleteVehicleModel(id) {
     try {
-      const response = await VehicleModelService.deleteVehicleModel(id);
-      this.fetchModels();
-      return response;
+      await VehicleModelService.deleteVehicleModel(id);
+      this.fetchModels(false);
+      showMessagePopup('Vehicle model deleted successfully.', 'success');
     } catch (error) {
       showMessagePopup(
         `Error during deleteVehicleModel: ${error.message}`,
@@ -107,33 +115,40 @@ class VehicleModelStore {
   }
 
   async paginationChange(paginationProps) {
-    if (paginationProps.pageSize !== this.pagination.pageSize) {
-      this.paginate.pageSize = paginationProps.pageSize;
-      this.pagination.pageSize = paginationProps.pageSize;
-      this.pagination.pageToken = '';
+    try {
+      updatePaginationConfig(this, paginationProps);
+      await this.fetchModels(false);
+    } catch (error) {
+      showMessagePopup(
+        `Error during pagination change: ${error.message}`,
+        'error'
+      );
     }
-
-    if (this.paginate.currentPage > paginationProps.currentPage) {
-      this.pagination.pageToken = this.paginate.previousPageToken;
-    } else if (this.paginate.currentPage < paginationProps.currentPage) {
-      this.pagination.pageToken = this.paginate.nextPageToken;
-    }
-
-    await this.fetchModels();
   }
 
   async sortModels(field) {
-    this.sortField = field;
-    this.sortOrder =
-      this.sortOrder === 'ASCENDING' ? 'DESCENDING' : 'ASCENDING';
-    await this.fetchModels();
+    try {
+      runInAction(() => {
+        this.sortField = field;
+        this.sortOrder =
+          this.sortOrder === 'ASCENDING' ? 'DESCENDING' : 'ASCENDING';
+      });
+      await this.fetchModels(false);
+    } catch (error) {
+      showMessagePopup(`Error during sorting: ${error.message}`, 'error');
+    }
   }
 
   async filterModels(filter) {
-    this.filters = filter;
-    this.sortField = 'name';
-    this.sortOrder = 'ASCENDING';
-    await this.fetchModels();
+    try {
+      runInAction(() => {
+        this.filters = filter;
+        resetSorting(this);
+      });
+      await this.fetchModels(false);
+    } catch (error) {
+      showMessagePopup(`Error during filtering: ${error.message}`, 'error');
+    }
   }
 }
 

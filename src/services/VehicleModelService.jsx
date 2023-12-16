@@ -1,5 +1,5 @@
 import BaseService from './BaseService';
-import { createQuery } from '../utils/queryUtil';
+import createQuery from '../utils/queryUtil';
 
 class VehicleModelService extends BaseService {
   constructor() {
@@ -7,23 +7,23 @@ class VehicleModelService extends BaseService {
   }
 
   async fetchModels() {
-    return await this.read();
+    return this.read();
   }
 
   async fetchModelsWithParams(data) {
-    return await this.readWithParams(createQuery(data));
+    return this.readWithParams(createQuery(data));
   }
 
   async addVehicleModel(data) {
-    return await this.create(data);
+    return this.create(data);
   }
 
   async updateVehicleModel(id, data) {
-    return await this.update(id, data);
+    return this.update(id, data);
   }
 
   async deleteVehicleModel(id) {
-    return await this.delete(id);
+    return this.delete(id);
   }
 }
 

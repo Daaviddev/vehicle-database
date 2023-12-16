@@ -1,6 +1,5 @@
 // Function to create a query object for Firestore
-
-export function createQuery(data) {
+function createQuery(data) {
   return {
     pageSize: data.pagination.pageSize,
     pageToken: data.pagination.pageToken,
@@ -27,3 +26,5 @@ export function createQuery(data) {
     },
   };
 }
+
+export default createQuery;

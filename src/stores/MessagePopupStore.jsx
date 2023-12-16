@@ -1,8 +1,12 @@
-import { makeObservable, observable, action } from 'mobx';
+import { makeObservable, observable, action, runInAction } from 'mobx';
 
 class MessagePopupStore {
   queue = []; // Queue to store messages
-  message = { text: '', type: '' }; // Current message
+
+  message = {
+    text: '',
+    type: '',
+  };
 
   constructor() {
     makeObservable(this, {
@@ -16,7 +20,17 @@ class MessagePopupStore {
 
   // Add a new message to the queue
   showMessagePopup(text, type = 'error') {
-    this.queue.push({ text, type });
+    if (
+      typeof text !== 'string' ||
+      !['error', 'success', 'info'].includes(type)
+    ) {
+      console.error('Invalid message or type for popup');
+      return;
+    }
+
+    runInAction(() => {
+      this.queue.push({ text, type });
+    });
     // If there's no current message, display the next one
     if (!this.message.text) {
       this.nextMessage();
@@ -26,9 +40,13 @@ class MessagePopupStore {
   // Show the next message in the queue
   nextMessage() {
     if (this.queue.length > 0) {
-      this.message = this.queue.shift(); // Dequeue the next message
+      runInAction(() => {
+        this.message = this.queue.shift(); // Dequeue the next message
+      });
     } else {
-      this.message = { text: '', type: '' }; // Reset if queue is empty
+      runInAction(() => {
+        this.message = { text: '', type: '' }; // Reset if queue is empty
+      });
     }
   }
 

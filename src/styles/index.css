@@ -33,6 +33,23 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  margin: 0px;
+  font-weight: 600;
+  font-size: 1.875rem;
+  line-height: 1.27;
+  font-family: 'Public Sans', sans-serif;
+}
+
+h6 {
+  margin: 0px;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.57;
+  font-family: 'Public Sans', sans-serif;
+  color: rgb(191, 191, 191);
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
