@@ -27,5 +27,6 @@ module.exports = {
       2,
       { namedComponents: 'arrow-function' },
     ],
+    'arrow-body-style': 'off',
   },
 };

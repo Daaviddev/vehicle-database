@@ -22,7 +22,7 @@ class VehicleMakeStore {
   // Pagination state for UI
   paginate = {
     currentPage: 1,
-    pageSize: 3,
+    pageSize: 5,
     totalPages: 1,
     previousPageToken: '',
     nextPageToken: '',
@@ -31,7 +31,7 @@ class VehicleMakeStore {
 
   // Pagination parameters for API requests
   pagination = {
-    pageSize: 3,
+    pageSize: 5,
     pageToken: '',
   };
 

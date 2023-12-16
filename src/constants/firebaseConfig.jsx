@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
 export default firebaseConfig;

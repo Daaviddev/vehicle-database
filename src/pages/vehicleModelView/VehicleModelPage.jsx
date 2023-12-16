@@ -2,53 +2,50 @@ import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 
-import VehicleMakeStore from '../../stores/VehicleMakeStore';
+import VehicleModelStore from '../../stores/VehicleModelStore';
 import CreateButton from '../../components/reusable/CreateButton';
 import Table from '../../components/ui/Table';
 
-import showMessagePopup from '../../utils/messagePopupUtils';
 import generateColumnFieldsFromData from '../../utils/tableUtils';
-import VehicleMakeConst from '../../constants/vehicleMakeConst';
+import VehicleModelConst from '../../constants/vehicleModelConst';
 
-const VehicleMakePage = observer(() => {
+const VehicleModelPage = observer(() => {
   useEffect(() => {
-    VehicleMakeStore.fetchMakes();
+    VehicleModelStore.fetchModels();
   }, []);
 
   const navigate = useNavigate();
 
-  // Generate columns based on VehicleMake class properties
-  const columns = generateColumnFieldsFromData(VehicleMakeConst);
+  // Generate columns based on VehicleModel class properties
+  const columns = generateColumnFieldsFromData(VehicleModelConst);
 
   const handleCreateNew = () => {
-    showMessagePopup('Create new vehicle make', 'success');
-    navigate('/vehicle-makes/create');
+    navigate('/vehicle-models/create');
   };
 
   const handleEdit = (id) => {
-    navigate(`/vehicle-makes/edit/${id}`);
+    navigate(`/vehicle-models/edit/${id}`);
   };
 
   const handleDelete = (id) => {
-    VehicleMakeStore.deleteVehicleMake(id);
+    VehicleModelStore.deleteVehicleModel(id);
   };
 
   const handleSort = (field) => {
     console.log('sort-field: ', field);
-    VehicleMakeStore.sortMakes(field);
+    VehicleModelStore.sortModels(field);
   };
-
   return (
     <div className="page-canvas">
       <div className="view-header-div">
-        <h2>Vehicle Make View</h2>
+        <h2>Vehicle Models</h2>
         <CreateButton onClick={handleCreateNew} />
       </div>
       <div className="components-wrapper">
         <Table
           columns={columns}
-          data={VehicleMakeStore.makes}
-          pageSize={VehicleMakeStore.paginate.pageSize}
+          data={VehicleModelStore.models}
+          pageSize={VehicleModelStore.paginate.pageSize}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onSort={handleSort}
@@ -58,4 +55,4 @@ const VehicleMakePage = observer(() => {
   );
 });
 
-export default VehicleMakePage;
+export default VehicleModelPage;

@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 
 const CreateButton = ({ onClick }) => {
-  <div>
-    CreateButton
-    <button type="button" onClick={onClick()}>
-      Create
+  return (
+    <button type="button" className="create-button" onClick={onClick}>
+      Create New
     </button>
-  </div>;
+  );
 };
 
 CreateButton.propTypes = {
